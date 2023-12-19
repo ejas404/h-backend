@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import  {adminRouter} from './routes/admin.js'
 import { errMiddleware } from './middlewares/err_middleware.js'
 import { studentRouter } from './routes/student.js'
+import { tutorRouter } from './routes/tutor.js'
 
 const app = express()
 const PORT = process.env.PORT
@@ -24,6 +25,7 @@ app.use(cors(
 
 app.use('/admin', adminRouter)
 app.use('/student',studentRouter)
+app.use('/tutor', tutorRouter)
 
 app.use(errMiddleware)
 

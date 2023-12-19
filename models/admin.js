@@ -15,7 +15,7 @@ const adminSchema = new Schema({
 //user schema
 
 
-adminSchema.method.checkPassword = async (pwd)=>{
+adminSchema.methods.checkPassword = async function (pwd){
     return await bcrypt.compare(pwd,this.password)
 }
 

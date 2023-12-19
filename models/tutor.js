@@ -11,13 +11,14 @@ const tutorSchema = new Schema({
     email : {type:String, required:true},
     role : {type : String , default : 'Tutor'},
     twofactor : {type : Boolean},
-    isBlocked : {type : Boolean, default : false}
+    isBlocked : {type : Boolean, default : false},
+    contact : {type : String}
 })
 
 //user schema
 
 
-tutorSchema.method.checkPassword = async (pwd)=>{
+tutorSchema.methods.checkPassword = async function (pwd){
     return await bcrypt.compare(pwd,this.password)
 }
 

@@ -11,13 +11,14 @@ const studentSchema = new Schema({
     email : {type:String, required:true},
     role : {type : String , default : 'Student'},
     twofactor : {type : Boolean},
-    isBlocked : {type : Boolean, default : false}
+    isBlocked : {type : Boolean, default : false},
+    contact : {type : String}
 })
 
 //user schema
 
 
-studentSchema.method.checkPassword = async (pwd)=>{
+studentSchema.methods.checkPassword = async function (pwd){
     return await bcrypt.compare(pwd,this.password)
 }
 

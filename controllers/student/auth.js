@@ -5,15 +5,10 @@ import studentCollection from "../../models/student.js";
 
 
 export const login = asyncHandler(async (req, res) => {
-    console.log('login requested')
     const {email, password} = req.body;
 
     const user = await studentCollection.findOne({email});
-    if(!user){
-        res.status(401);
-        throw new Error("Invalid email or password.");
-    }
-    if (user && !(await user.checkPassword(password))) {
+    if (!user || !(await user.checkPassword(password))) {
         res.status(401);
         throw new Error("Invalid email or password.");
     }
@@ -26,6 +21,7 @@ export const login = asyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         role : user.role,
+        contact : user.contact,
         isBlocked : user.isBlocked
     }
     console.log('b4 response')
@@ -59,3 +55,4 @@ export const register = asyncHandler(async (req, res) => {
         throw new Error("Invalid user data.");
     }
 })
+
