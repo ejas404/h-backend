@@ -14,7 +14,8 @@ export const login = asyncHandler(async (req, res) => {
         let userDetails = {
             _id: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            role : user.role
         }
         res.status(201).json({
            user : userDetails,

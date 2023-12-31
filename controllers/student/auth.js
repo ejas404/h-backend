@@ -13,6 +13,13 @@ export const login = asyncHandler(async (req, res) => {
         throw new Error("Invalid email or password.");
     }
 
+    if(user.isBlocked){
+        res.status('401')
+        throw new Error('entry resticted connect support')
+    }
+
+    console.log('login responded')
+
     
 
     let token = generateToken(res, user._id);
@@ -24,7 +31,6 @@ export const login = asyncHandler(async (req, res) => {
         contact : user.contact,
         isBlocked : user.isBlocked
     }
-    console.log('b4 response')
     res.status(201).json({
        user : userDetails,
        token : token
@@ -48,11 +54,13 @@ export const register = asyncHandler(async (req, res) => {
         res.status(201).json({
             _id: user._id,
             name: user.name,
-            email: user.email,  
+            email: user.email,
+            role : user.role  
         })
     } else {
         res.status(400);
         throw new Error("Invalid user data.");
     }
 })
+
 

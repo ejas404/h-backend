@@ -1,12 +1,13 @@
 
 import asyncHandler from "express-async-handler"
 import studentCollection from "../../models/student.js";
+import tutorCollection from "../../models/tutor.js";
 
 
 export const getUsers = asyncHandler(async (req, res) => {
-    console.log('get users requsted')
-    const users = await studentCollection.find({});
-    res.status(200).json(users);
+    const userlist = await studentCollection.find({});
+    const tutorlist = await tutorCollection.find({})
+    res.status(200).json({userlist,tutorlist});
 })
 
 
@@ -36,7 +37,6 @@ export const editUser = asyncHandler(async (req, res) => {
 
 
 export const deleteUser = asyncHandler(async (req, res) => {
-    console.log('delete user')
     const { id } = req.params;
 
     const user = await studentCollection.findByIdAndDelete(id);
@@ -54,7 +54,6 @@ export const deleteUser = asyncHandler(async (req, res) => {
 
 
 export const blockUser = asyncHandler(async (req, res) => {
-    console.log('block user called')
     const { id } = req.params;
 
     const user = await studentCollection.findById(id);

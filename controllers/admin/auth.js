@@ -6,7 +6,6 @@ import { generateToken } from "../../utility/token.js"
 // admin authentication handling functions
 
 export const postLogin = asyncHandler( async (req,res)=>{
-    console.log('admin login request made')
 
     const {email , password} = req.body
     const admin = await AdminCollection.findOne({email})

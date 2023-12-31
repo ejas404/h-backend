@@ -9,10 +9,23 @@ const tutorSchema = new Schema({
     name : {type:String, required:true},
     password : {type:String, required:true},
     email : {type:String, required:true},
-    role : {type : String , default : 'Tutor'},
+    profile : {type : String},
+    role : {type : String , default : 'Tutor', immutable : true},
     twofactor : {type : Boolean},
     isBlocked : {type : Boolean, default : false},
-    contact : {type : String}
+    contact : {type : String},
+    education : [
+        {
+            ed_id : {type : String, required : true}, 
+            university : {type : String, required : true},
+            stream : {type : String, required : true},
+            year : {type : Number, required : true},
+            country : {type : String, required : true},
+        }
+    ],
+    language :{type :  [String], default : ['eg : English']},
+    teaches : {type :  [String], default : ['eg : Science']},
+    field : {type :  [String], default : ['eg : Computer Science']},
 })
 
 //user schema

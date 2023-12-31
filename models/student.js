@@ -9,6 +9,7 @@ const studentSchema = new Schema({
     name : {type:String, required:true},
     password : {type:String, required:true},
     email : {type:String, required:true},
+    profile : {type:String},
     role : {type : String , default : 'Student'},
     twofactor : {type : Boolean},
     isBlocked : {type : Boolean, default : false},

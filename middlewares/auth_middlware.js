@@ -5,20 +5,20 @@ import studentCollection from "../models/student.js"
 import tutorCollection from "../models/tutor.js"
 
 export const  isStudentBlocked = asyncHandler(async (req,res,next)=>{
-    const {email} = req.body
+    const {email} = req.user
     let student = await studentCollection.findOne({email})
     if(student && student.isBlocked){  
-            res.status(402);
+            res.status(401);
             throw new Error("enrtry restricted contact the authority");
     }
     next()
 })
 
 export const  isTutorBlocked = asyncHandler(async (req,res,next)=>{
-    const {email} = req.body
+    const {email} = req.tutor
     let tutor = await tutorCollection.findOne({email})
     if(tutor && tutor.isBlocked){  
-            res.status(402);
+            res.status(401);
             throw new Error("enrtry restricted contact the authority");
     }
     next()
@@ -26,13 +26,10 @@ export const  isTutorBlocked = asyncHandler(async (req,res,next)=>{
 
 export const isAuthenticated = asyncHandler(async (req, res, next) => {
     let token;
-    console.log(req.headers.authorization)
-    console.log('after req header')
     token = req.headers.authorization;
     if (token) {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            console.log('after decoded',decoded)
             req.admin = await AdminCollection.findById(decoded.userId).select('-password');
             next();
         } catch (error) {
@@ -70,7 +67,7 @@ export const isTutorAuthenticated = asyncHandler(async (req, res, next) => {
     if (token) {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await tutorCollection.findById(decoded.userId).select('-password');
+            req.tutor = await tutorCollection.findById(decoded.userId).select('-password');
             next();
         } catch (error) {
             res.status(401);
