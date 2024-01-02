@@ -158,7 +158,9 @@ export const requestCourse = asyncHandler(async(req,res)=>{
         tutor : req.tutor._id,
         title,
         description,
-        isTutorMade : true
+        isTutorMade : true,
+        isAvailable : false,
+        isApproved : false
     })
 
     res.json({newCourse})

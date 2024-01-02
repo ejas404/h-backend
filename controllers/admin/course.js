@@ -98,3 +98,24 @@ export const updateCourse = asyncHandler(async(req,res)=>{
     res.json({updatedCourse})
 })
 
+
+
+export const courseApprove = asyncHandler(async(req,res)=>{
+
+    console.log('from update course')
+    const {id} = req.params
+    
+    const course = await courseCollection.findById(id)
+
+    course.isApproved = true 
+    course.request = 'Approved'
+
+    await course.save()
+   
+
+    const updatedCourse = await courseCollection.findById(id).populate('tutor', 'name')
+    
+
+    res.json({ courseDetails : updatedCourse})
+})
+

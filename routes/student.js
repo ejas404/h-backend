@@ -9,6 +9,9 @@ export const studentRouter = express.Router()
 studentRouter.post('/register', studentCtrl.register)
 
 studentRouter.post('/login', studentCtrl.login)
+studentRouter.get('/courses',studentCtrl.getCourses)
+studentRouter.get('/course/:id',studentCtrl.getSingleCourse)
+
 
 studentRouter.use(isStudentAuthenticated,isStudentBlocked)
 studentRouter.get('/profile', studentProfCtrl.getProfile)
