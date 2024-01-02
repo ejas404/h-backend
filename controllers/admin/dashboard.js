@@ -97,3 +97,71 @@ export const unblockUser = asyncHandler(async (req, res) => {
 });
 
 
+export const deleteTutor = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const user = await tutorCollection.findByIdAndDelete(id);
+    if (user) {
+        res.status(200).json({
+           tutor : {
+            _id: user._id,
+            name: user.name,
+            email: user.email
+           }
+        });
+    } else {
+        res.status(404);
+        throw new Error("User not found.");
+    }
+});
+
+
+export const blockTutor = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const user = await tutorCollection.findById(id);
+    if (user) {
+
+        user.isBlocked = true
+        user.save()
+
+
+        res.status(200).json({
+            tutor : {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+               }
+        });
+    } else {
+        res.status(404);
+        throw new Error("User not found.");
+    }
+});
+
+
+export const unblockTutor = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const user = await tutorCollection.findById(id);
+    if (user) {
+
+        user.isBlocked = false
+        user.save()
+
+
+        res.status(200).json({
+            tutor : {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+               }
+        });
+    } else {
+        res.status(404);
+        throw new Error("User not found.");
+    }
+});
+
+
+

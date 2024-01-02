@@ -3,6 +3,7 @@ import tutorCollection from "../../models/tutor.js";
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid';
 import * as fs from 'fs'
+import courseCollection from "../../models/course.js";
 
 
 
@@ -70,7 +71,7 @@ export const updateEducation = asyncHandler(async (req, res) => {
 
 
 export const updatePic = asyncHandler(async (req, res) => {
-    console.log('update pic called')
+
     const { email } = req.tutor
     let tutor = await tutorCollection.findOne({ email })
 
@@ -85,7 +86,7 @@ export const updatePic = asyncHandler(async (req, res) => {
     }
 
     tutor.profile = req.file.path
-    console.log(tutor.file, 'file printed')
+
     tutor.save()
 
     res.json({ msg: 'profile image upadted successfully',path : req.file.path})
@@ -139,4 +140,26 @@ export const deleteEducation = asyncHandler(async (req,res)=>{
 
     res.json({toDelete})
 
+})
+
+
+export const getCourses = asyncHandler(async (req,res)=>{
+    const tutorCourses = await courseCollection.find({tutor : req.tutor._id})
+
+    res.json({tutorCourses})
+})
+
+export const requestCourse = asyncHandler(async(req,res)=>{
+
+    const {title , description , fee} = req.body
+
+    const newCourse = await courseCollection.create({
+        fee : Number(fee),
+        tutor : req.tutor._id,
+        title,
+        description,
+        isTutorMade : true
+    })
+
+    res.json({newCourse})
 })
